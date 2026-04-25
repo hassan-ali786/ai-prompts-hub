@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Prompts Hub</title>
 
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0;
+  border-radius: 8px;
+  border: none;
+}
+
+.box {
+  background: #1e293b;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: none;
+  background: #22c55e;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+</style>
+
+</head>
+<body>
+
+<h1>🚀 AI Prompts for Students</h1>
+
+<input type="text" id="search" placeholder="Search prompts..." onkeyup="searchPrompt()">
+
+<div class="box">
+  <h3>LinkedIn Post</h3>
+  <p class="text">Write a viral LinkedIn post about [topic] with a strong hook.</p>
+  <button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="box">
+  <h3>Study Notes</h3>
+  <p class="text">Explain [topic] in simple words with examples.</p>
+  <button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="box">
+  <h3>Project Ideas</h3>
+  <p class="text">Give me 5 beginner-friendly data science project ideas.</p>
+  <button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="box">
+  <h3>Resume Help</h3>
+  <p class="text">Analyze my resume and suggest improvements.</p>
+  <button onclick="copyText(this)">Copy</button>
+</div>
+
+<script>
+function copyText(btn) {
+  let text = btn.parentElement.querySelector(".text").innerText;
+  navigator.clipboard.writeText(text);
+  btn.innerText = "Copied!";
+}
+
+function searchPrompt() {
+  let input = document.getElementById("search").value.toLowerCase();
+  let boxes = document.querySelectorAll(".box");
+
+  boxes.forEach(box => {
+    let text = box.innerText.toLowerCase();
+    box.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+</script>
+
+</body>
+</html>
