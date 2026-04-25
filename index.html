@@ -18,7 +18,7 @@ h1 {
 
 input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin: 20px 0;
   border-radius: 8px;
   border: none;
@@ -31,9 +31,13 @@ input {
   border-radius: 10px;
 }
 
+h3 {
+  margin-bottom: 5px;
+}
+
 button {
   margin-top: 10px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border: none;
   background: #22c55e;
   color: white;
@@ -43,41 +47,83 @@ button {
 </style>
 
 </head>
+
 <body>
 
-<h1>🚀 AI Prompts for Students</h1>
+<h1>🚀 AI Prompts Hub</h1>
 
 <input type="text" id="search" placeholder="Search prompts..." onkeyup="searchPrompt()">
 
+<!-- PROMPTS START -->
+
 <div class="box">
-  <h3>LinkedIn Post</h3>
-  <p class="text">Write a viral LinkedIn post about [topic] with a strong hook.</p>
-  <button onclick="copyText(this)">Copy</button>
+<h3>LinkedIn Post Generator</h3>
+<p class="text">Write a viral LinkedIn post about [topic] with hook, value and CTA.</p>
+<button onclick="copyText(this)">Copy</button>
 </div>
 
 <div class="box">
-  <h3>Study Notes</h3>
-  <p class="text">Explain [topic] in simple words with examples.</p>
-  <button onclick="copyText(this)">Copy</button>
+<h3>Study Notes</h3>
+<p class="text">Explain [topic] in simple words with examples for exam preparation.</p>
+<button onclick="copyText(this)">Copy</button>
 </div>
 
 <div class="box">
-  <h3>Project Ideas</h3>
-  <p class="text">Give me 5 beginner-friendly data science project ideas.</p>
-  <button onclick="copyText(this)">Copy</button>
+<h3>Project Ideas</h3>
+<p class="text">Give 10 beginner-friendly AI or data science project ideas.</p>
+<button onclick="copyText(this)">Copy</button>
 </div>
 
 <div class="box">
-  <h3>Resume Help</h3>
-  <p class="text">Analyze my resume and suggest improvements.</p>
-  <button onclick="copyText(this)">Copy</button>
+<h3>Resume Builder</h3>
+<p class="text">Improve my resume for [job role] and make it professional.</p>
+<button onclick="copyText(this)">Copy</button>
 </div>
+
+<div class="box">
+<h3>Code Debugger</h3>
+<p class="text">Find errors in this code and fix them step by step.</p>
+<button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="box">
+<h3>Python Script</h3>
+<p class="text">Write a Python program for [task] with comments.</p>
+<button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="box">
+<h3>Daily Study Plan</h3>
+<p class="text">Create a 7-day study plan for learning [skill].</p>
+<button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="box">
+<h3>Interview Prep</h3>
+<p class="text">Prepare me for interview of [job role] with questions and answers.</p>
+<button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="box">
+<h3>Content Ideas</h3>
+<p class="text">Give 20 viral content ideas for social media about [topic].</p>
+<button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="box">
+<h3>AI Tool Suggestions</h3>
+<p class="text">Suggest free AI tools for students and developers.</p>
+<button onclick="copyText(this)">Copy</button>
+</div>
+
+<!-- PROMPTS END -->
 
 <script>
 function copyText(btn) {
   let text = btn.parentElement.querySelector(".text").innerText;
   navigator.clipboard.writeText(text);
   btn.innerText = "Copied!";
+  setTimeout(() => btn.innerText = "Copy", 1000);
 }
 
 function searchPrompt() {
