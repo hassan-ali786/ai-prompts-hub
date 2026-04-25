@@ -1,83 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>AI Prompts Hub</title>
+<title>Prompt Studio Pro</title>
 
 <style>
+:root {
+  --bg: #070b14;
+  --card: #0f172a;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: #1f2937;
+}
+
+/* LIGHT MODE */
+.light {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #4b5563;
+  --border: #e5e7eb;
+}
+
 body {
   margin: 0;
-  font-family: Arial;
-  background: #0b1220;
-  color: #fff;
+  font-family: system-ui;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
 }
 
-header {
-  padding: 20px;
+/* NAV */
+nav {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 700;
+}
+
+.toggle {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* HERO */
+.hero {
   text-align: center;
-  background: #111827;
+  padding: 70px 20px 40px;
 }
 
-h1 {
+.hero h1 {
+  font-size: 48px;
   margin: 0;
-  font-size: 26px;
 }
 
+.hero p {
+  color: var(--muted);
+}
+
+/* BUTTON */
+.btn {
+  padding: 12px 18px;
+  background: linear-gradient(135deg,#3b82f6,#2563eb);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+/* CONTAINER */
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
   padding: 20px;
 }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 15px 0;
-  border-radius: 8px;
-  border: none;
-}
-
-.tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.tab {
-  padding: 8px 12px;
-  background: #1f2937;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.tab:hover {
-  background: #374151;
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
 }
 
 .card {
-  background: #1e293b;
-  padding: 15px;
-  margin: 10px 0;
+  background: var(--card);
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+/* TOOL */
+.tool {
+  background: var(--card);
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
   border-radius: 10px;
-  transition: 0.2s;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
 }
 
-.card:hover {
-  transform: scale(1.02);
+/* OUTPUT */
+.output {
+  margin-top: 20px;
+  padding: 15px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-height: 120px;
+  white-space: pre-wrap;
 }
 
-button {
-  margin-top: 8px;
-  padding: 6px 10px;
-  border: none;
+/* COPY */
+.smallBtn {
+  margin-top: 10px;
+  padding: 10px;
   background: #22c55e;
+  border: none;
+  border-radius: 8px;
   color: white;
-  border-radius: 5px;
   cursor: pointer;
 }
 
-.hidden {
-  display: none;
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .container {
+    padding: 12px;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 </style>
 
@@ -85,91 +160,95 @@ button {
 
 <body>
 
-<header>
-<h1>AI Prompts Hub</h1>
-</header>
+<nav>
+  <div class="logo">Prompt Studio Pro</div>
+  <button class="toggle" onclick="toggleTheme()">Light / Dark</button>
+</nav>
+
+<div class="hero">
+  <h1>Generate Premium AI Prompts</h1>
+  <p>Smart prompts for coding, study, business and career growth</p>
+  <button class="btn" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">
+    Start Now
+  </button>
+</div>
 
 <div class="container">
 
-<input type="text" id="search" placeholder="Search prompts..." onkeyup="searchPrompt()">
-
-<div class="tabs">
-<div class="tab" onclick="filter('all')">All</div>
-<div class="tab" onclick="filter('study')">Study</div>
-<div class="tab" onclick="filter('code')">Code</div>
-<div class="tab" onclick="filter('career')">Career</div>
-<div class="tab" onclick="filter('content')">Content</div>
+<div class="grid">
+  <div class="card">Study & Learning Tools</div>
+  <div class="card">Coding Help</div>
+  <div class="card">Career Builder</div>
+  <div class="card">Startup Ideas</div>
 </div>
 
-<!-- CARDS -->
-
-<div class="card study">
-<h3>Study Notes</h3>
-<p class="text">Explain [topic] in simple words with examples for exams.</p>
-<button onclick="copyText(this)">Copy</button>
 </div>
 
-<div class="card code">
-<h3>Python Code</h3>
-<p class="text">Write a Python program for [task] with comments.</p>
-<button onclick="copyText(this)">Copy</button>
-</div>
+<div class="container" id="tool">
 
-<div class="card career">
-<h3>Resume Improve</h3>
-<p class="text">Improve my resume for [job role] and make it professional.</p>
-<button onclick="copyText(this)">Copy</button>
-</div>
+<div class="tool">
 
-<div class="card content">
-<h3>LinkedIn Post</h3>
-<p class="text">Write a viral LinkedIn post about [topic] with hook and CTA.</p>
-<button onclick="copyText(this)">Copy</button>
-</div>
+<h3>AI Prompt Generator</h3>
 
-<div class="card study">
-<h3>Study Plan</h3>
-<p class="text">Create a 7-day study plan for learning [skill].</p>
-<button onclick="copyText(this)">Copy</button>
-</div>
+<select id="task">
+<option>LinkedIn Post</option>
+<option>Study Notes</option>
+<option>Project Ideas</option>
+<option>Resume Improvement</option>
+<option>Code Explanation</option>
+<option>Startup Idea</option>
+<option>Interview Prep</option>
+<option>Marketing Strategy</option>
+<option>Business Plan</option>
+</select>
 
-<div class="card code">
-<h3>Debug Code</h3>
-<p class="text">Find errors in this code and fix step by step.</p>
-<button onclick="copyText(this)">Copy</button>
+<input id="topic" placeholder="Enter topic">
+
+<button class="btn" onclick="generate()">Generate</button>
+
+<div class="output" id="output">Your result will appear here...</div>
+
+<button class="smallBtn" onclick="copy()">Copy</button>
+
 </div>
 
 </div>
 
 <script>
-function copyText(btn) {
-  let text = btn.parentElement.querySelector(".text").innerText;
-  navigator.clipboard.writeText(text);
-  btn.innerText = "Copied";
-  setTimeout(() => btn.innerText = "Copy", 1000);
+
+function generate(){
+  let task = document.getElementById("task").value;
+  let topic = document.getElementById("topic").value;
+
+  if(!topic.trim()){
+    document.getElementById("output").innerText = "Please enter a topic first.";
+    return;
+  }
+
+  const map = {
+    "LinkedIn Post": `Write a viral LinkedIn post about "${topic}" with hook, story, insights and CTA.`,
+    "Study Notes": `Create exam-ready notes on "${topic}" with examples and summary.`,
+    "Project Ideas": `Give 15 real-world project ideas on "${topic}".`,
+    "Resume Improvement": `Improve resume for "${topic}" role with ATS optimization.`,
+    "Code Explanation": `Explain "${topic}" step by step in simple language.`,
+    "Startup Idea": `Give startup ideas based on "${topic}".`,
+    "Interview Prep": `Give interview questions for "${topic}".`,
+    "Marketing Strategy": `Create marketing strategy for "${topic}".`,
+    "Business Plan": `Write business plan for "${topic}".`
+  };
+
+  document.getElementById("output").innerText = map[task];
 }
 
-function searchPrompt() {
-  let input = document.getElementById("search").value.toLowerCase();
-  let cards = document.querySelectorAll(".card");
-
-  cards.forEach(card => {
-    let text = card.innerText.toLowerCase();
-    card.style.display = text.includes(input) ? "block" : "none";
-  });
+function copy(){
+  navigator.clipboard.writeText(document.getElementById("output").innerText);
+  alert("Copied!");
 }
 
-function filter(type) {
-  let cards = document.querySelectorAll(".card");
-
-  cards.forEach(card => {
-    if (type === 'all') {
-      card.style.display = "block";
-    } else {
-      card.style.display = card.classList.contains(type) ? "block" : "none";
-    }
-  });
+function toggleTheme(){
+  document.body.classList.toggle("light");
 }
+
 </script>
 
 </body>
