@@ -60,7 +60,7 @@ You can easily copy prompts and use them for study, coding, resumes, and content
 
 ## Live Demo
 
-(Add your GitHub Pages link here)
+(https://hassan-ali786.github.io/ai-prompts-hub/)
 
 ---
 
