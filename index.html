@@ -6,43 +6,78 @@
 
 <style>
 body {
+  margin: 0;
   font-family: Arial;
-  background: #0f172a;
-  color: white;
+  background: #0b1220;
+  color: #fff;
+}
+
+header {
   padding: 20px;
+  text-align: center;
+  background: #111827;
 }
 
 h1 {
-  text-align: center;
+  margin: 0;
+  font-size: 26px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
 }
 
 input {
   width: 100%;
   padding: 12px;
-  margin: 20px 0;
+  margin: 15px 0;
   border-radius: 8px;
   border: none;
 }
 
-.box {
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tab {
+  padding: 8px 12px;
+  background: #1f2937;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.tab:hover {
+  background: #374151;
+}
+
+.card {
   background: #1e293b;
   padding: 15px;
   margin: 10px 0;
   border-radius: 10px;
+  transition: 0.2s;
 }
 
-h3 {
-  margin-bottom: 5px;
+.card:hover {
+  transform: scale(1.02);
 }
 
 button {
-  margin-top: 10px;
-  padding: 6px 12px;
+  margin-top: 8px;
+  padding: 6px 10px;
   border: none;
   background: #22c55e;
   color: white;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
 </style>
 
@@ -50,89 +85,89 @@ button {
 
 <body>
 
-<h1>🚀 AI Prompts Hub</h1>
+<header>
+<h1>AI Prompts Hub</h1>
+</header>
+
+<div class="container">
 
 <input type="text" id="search" placeholder="Search prompts..." onkeyup="searchPrompt()">
 
-<!-- PROMPTS START -->
-
-<div class="box">
-<h3>LinkedIn Post Generator</h3>
-<p class="text">Write a viral LinkedIn post about [topic] with hook, value and CTA.</p>
-<button onclick="copyText(this)">Copy</button>
+<div class="tabs">
+<div class="tab" onclick="filter('all')">All</div>
+<div class="tab" onclick="filter('study')">Study</div>
+<div class="tab" onclick="filter('code')">Code</div>
+<div class="tab" onclick="filter('career')">Career</div>
+<div class="tab" onclick="filter('content')">Content</div>
 </div>
 
-<div class="box">
+<!-- CARDS -->
+
+<div class="card study">
 <h3>Study Notes</h3>
-<p class="text">Explain [topic] in simple words with examples for exam preparation.</p>
+<p class="text">Explain [topic] in simple words with examples for exams.</p>
 <button onclick="copyText(this)">Copy</button>
 </div>
 
-<div class="box">
-<h3>Project Ideas</h3>
-<p class="text">Give 10 beginner-friendly AI or data science project ideas.</p>
-<button onclick="copyText(this)">Copy</button>
-</div>
-
-<div class="box">
-<h3>Resume Builder</h3>
-<p class="text">Improve my resume for [job role] and make it professional.</p>
-<button onclick="copyText(this)">Copy</button>
-</div>
-
-<div class="box">
-<h3>Code Debugger</h3>
-<p class="text">Find errors in this code and fix them step by step.</p>
-<button onclick="copyText(this)">Copy</button>
-</div>
-
-<div class="box">
-<h3>Python Script</h3>
+<div class="card code">
+<h3>Python Code</h3>
 <p class="text">Write a Python program for [task] with comments.</p>
 <button onclick="copyText(this)">Copy</button>
 </div>
 
-<div class="box">
-<h3>Daily Study Plan</h3>
+<div class="card career">
+<h3>Resume Improve</h3>
+<p class="text">Improve my resume for [job role] and make it professional.</p>
+<button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="card content">
+<h3>LinkedIn Post</h3>
+<p class="text">Write a viral LinkedIn post about [topic] with hook and CTA.</p>
+<button onclick="copyText(this)">Copy</button>
+</div>
+
+<div class="card study">
+<h3>Study Plan</h3>
 <p class="text">Create a 7-day study plan for learning [skill].</p>
 <button onclick="copyText(this)">Copy</button>
 </div>
 
-<div class="box">
-<h3>Interview Prep</h3>
-<p class="text">Prepare me for interview of [job role] with questions and answers.</p>
+<div class="card code">
+<h3>Debug Code</h3>
+<p class="text">Find errors in this code and fix step by step.</p>
 <button onclick="copyText(this)">Copy</button>
 </div>
 
-<div class="box">
-<h3>Content Ideas</h3>
-<p class="text">Give 20 viral content ideas for social media about [topic].</p>
-<button onclick="copyText(this)">Copy</button>
 </div>
-
-<div class="box">
-<h3>AI Tool Suggestions</h3>
-<p class="text">Suggest free AI tools for students and developers.</p>
-<button onclick="copyText(this)">Copy</button>
-</div>
-
-<!-- PROMPTS END -->
 
 <script>
 function copyText(btn) {
   let text = btn.parentElement.querySelector(".text").innerText;
   navigator.clipboard.writeText(text);
-  btn.innerText = "Copied!";
+  btn.innerText = "Copied";
   setTimeout(() => btn.innerText = "Copy", 1000);
 }
 
 function searchPrompt() {
   let input = document.getElementById("search").value.toLowerCase();
-  let boxes = document.querySelectorAll(".box");
+  let cards = document.querySelectorAll(".card");
 
-  boxes.forEach(box => {
-    let text = box.innerText.toLowerCase();
-    box.style.display = text.includes(input) ? "block" : "none";
+  cards.forEach(card => {
+    let text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+
+function filter(type) {
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    if (type === 'all') {
+      card.style.display = "block";
+    } else {
+      card.style.display = card.classList.contains(type) ? "block" : "none";
+    }
   });
 }
 </script>
