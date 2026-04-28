@@ -1,255 +1,1055 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prompt Studio Pro</title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #070b14;
-  --card: #0f172a;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
-  --border: #1f2937;
-}
-
-/* LIGHT MODE */
-.light {
-  --bg: #f5f7fb;
-  --card: #ffffff;
-  --text: #111827;
-  --muted: #4b5563;
-  --border: #e5e7eb;
-}
-
-body {
-  margin: 0;
-  font-family: system-ui;
-  background: var(--bg);
-  color: var(--text);
-  transition: 0.3s;
-}
-
-/* NAV */
-nav {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-weight: 700;
-}
-
-.toggle {
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 8px 12px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 70px 20px 40px;
-}
-
-.hero h1 {
-  font-size: 48px;
-  margin: 0;
-}
-
-.hero p {
-  color: var(--muted);
-}
-
-/* BUTTON */
-.btn {
-  padding: 12px 18px;
-  background: linear-gradient(135deg,#3b82f6,#2563eb);
-  border: none;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 15px;
-}
-
-/* CONTAINER */
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
-}
-
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
-}
-
-.card {
-  background: var(--card);
-  padding: 18px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-}
-
-/* TOOL */
-.tool {
-  background: var(--card);
-  padding: 22px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-}
-
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-}
-
-/* OUTPUT */
-.output {
-  margin-top: 20px;
-  padding: 15px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  min-height: 120px;
-  white-space: pre-wrap;
-}
-
-/* COPY */
-.smallBtn {
-  margin-top: 10px;
-  padding: 10px;
-  background: #22c55e;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-}
-
-/* RESPONSIVE */
-@media (max-width: 600px) {
-  .hero h1 {
-    font-size: 32px;
+  :root {
+    --bg: #04060c;
+    --surface: #090e1a;
+    --card: #0d1424;
+    --border: rgba(99,120,200,0.15);
+    --accent: #5a7fff;
+    --accent2: #a78bfa;
+    --accent3: #34d399;
+    --text: #e8ecf5;
+    --muted: #6b7898;
+    --glow: rgba(90,127,255,0.3);
   }
 
-  .container {
-    padding: 12px;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
+  /* ── BACKGROUND ── */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(90,127,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(90,127,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 { width: 600px; height: 600px; background: rgba(90,127,255,0.08); top: -200px; left: -150px; }
+  .orb-2 { width: 500px; height: 500px; background: rgba(167,139,250,0.06); bottom: -100px; right: -100px; }
+  .orb-3 { width: 300px; height: 300px; background: rgba(52,211,153,0.05); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+  /* ── NAV ── */
   nav {
-    flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(4,6,12,0.85);
+    backdrop-filter: blur(20px);
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
     gap: 10px;
   }
-}
+
+  .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.8); }
+  }
+
+  .nav-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    border: 1px solid rgba(52,211,153,0.3);
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 100px 20px 60px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 80px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.2s forwards;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+    font-weight: 400;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.3s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── CATEGORY PILLS ── */
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.4s forwards;
+  }
+
+  .pill {
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Mono', monospace;
+  }
+  .pill:hover, .pill.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(90,127,255,0.08);
+    box-shadow: 0 0 20px rgba(90,127,255,0.1);
+  }
+
+  /* ── MAIN TOOL ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 1; }
+
+  .studio-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(90,127,255,0.05);
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.5s forwards;
+  }
+
+  .card-header {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(13,20,36,0.8);
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent3);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent3);
+  }
+
+  .model-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    border: 1px solid rgba(167,139,250,0.25);
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .card-body { padding: 28px; }
+
+  /* ── TASK SELECTOR ── */
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .task-grid { grid-template-columns: repeat(2, 1fr); }
+    nav { padding: 14px 20px; }
+    .hero { padding: 60px 16px 40px; }
+  }
+
+  .task-btn {
+    padding: 12px 8px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .task-btn .icon { display: block; font-size: 18px; margin-bottom: 4px; }
+
+  .task-btn:hover { border-color: var(--accent); color: var(--text); background: rgba(90,127,255,0.06); }
+  .task-btn.active {
+    border-color: var(--accent);
+    background: rgba(90,127,255,0.12);
+    color: var(--accent);
+    box-shadow: inset 0 0 20px rgba(90,127,255,0.08), 0 0 20px rgba(90,127,255,0.08);
+  }
+
+  /* ── INPUT ── */
+  .input-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .input-wrap {
+    flex: 1;
+    position: relative;
+  }
+
+  .topic-input {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .topic-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(90,127,255,0.1);
+  }
+
+  .topic-input::placeholder { color: var(--muted); }
+
+  .gen-btn {
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, var(--accent), #3d5fcc);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gen-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #7c9fff, var(--accent));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .gen-btn:hover::before { opacity: 1; }
+  .gen-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(90,127,255,0.4); }
+  .gen-btn:active { transform: translateY(0); }
+  .gen-btn span { position: relative; z-index: 1; }
+  .gen-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* ── OUTPUT ── */
+  .output-wrap {
+    margin-top: 20px;
+    position: relative;
+  }
+
+  .output-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .output-box {
+    position: relative;
+    min-height: 180px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    padding: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: var(--text);
+    white-space: pre-wrap;
+    transition: border-color 0.3s;
+  }
+
+  .output-box.active { border-color: rgba(90,127,255,0.3); }
+
+  .placeholder-text {
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 140px;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .placeholder-icon { font-size: 32px; opacity: 0.4; }
+
+  /* ── LOADING ── */
+  .loading-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+    border-radius: 2px 2px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .loading-bar.visible { opacity: 1; }
+
+  /* ── CURSOR BLINK ── */
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--accent);
+    margin-left: 2px;
+    animation: blink 0.8s step-end infinite;
+    vertical-align: text-bottom;
+  }
+
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ── ACTION BAR ── */
+  .action-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .action-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(90,127,255,0.05); }
+  .action-btn.success { border-color: var(--accent3); color: var(--accent3); }
+
+  /* ── TOKEN COUNTER ── */
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding: 0 4px;
+  }
+
+  .token-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .quality-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(52,211,153,0.1);
+    color: var(--accent3);
+    border: 1px solid rgba(52,211,153,0.2);
+  }
+
+  /* ── HISTORY ── */
+  .history-section {
+    margin-top: 40px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.8s forwards;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .history-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .history-item {
+    padding: 14px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .history-item:hover { border-color: var(--accent); background: rgba(90,127,255,0.04); }
+
+  .history-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .history-topic { font-size: 14px; font-weight: 600; color: var(--text); }
+
+  /* ── STATS ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.6s forwards;
+  }
+
+  .stat-card {
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 26px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; font-family: 'DM Mono', monospace; }
+
+  /* ── EMPTY STATE ── */
+  .empty-history {
+    text-align: center;
+    padding: 30px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+  }
 </style>
-
 </head>
-
 <body>
 
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
 <nav>
-  <div class="logo">Prompt Studio Pro</div>
-  <button class="toggle" onclick="toggleTheme()">Light / Dark</button>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    Prompt Studio
+  </div>
+  <div class="nav-badge">100% Offline · No API</div>
 </nav>
 
 <div class="hero">
-  <h1>Generate Premium AI Prompts</h1>
-  <p>Smart prompts for coding, study, business and career growth</p>
-  <button class="btn" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">
-    Start Now
-  </button>
+  <div class="hero-eyebrow">AI-Powered Prompt Engineering</div>
+  <h1>Generate <span>Premium</span><br>AI Prompts</h1>
+  <p class="hero-sub">Real AI-crafted prompts for coding, career growth, business strategy and beyond.</p>
+
+  <div class="pills" id="pills">
+    <div class="pill active" onclick="filterPills(this, 'all')">All</div>
+    <div class="pill" onclick="filterPills(this, 'career')">Career</div>
+    <div class="pill" onclick="filterPills(this, 'tech')">Tech</div>
+    <div class="pill" onclick="filterPills(this, 'business')">Business</div>
+    <div class="pill" onclick="filterPills(this, 'learning')">Learning</div>
+  </div>
 </div>
 
 <div class="container">
 
-<div class="grid">
-  <div class="card">Study & Learning Tools</div>
-  <div class="card">Coding Help</div>
-  <div class="card">Career Builder</div>
-  <div class="card">Startup Ideas</div>
-</div>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" id="stat-generated">0</div>
+      <div class="stat-label">Prompts Generated</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-tasks">9</div>
+      <div class="stat-label">Task Types</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-chars">0</div>
+      <div class="stat-label">Chars Created</div>
+    </div>
+  </div>
 
-</div>
+  <div class="studio-card">
+    <div class="card-header">
+      <div class="card-title">Prompt Generator Studio</div>
+      <div class="model-tag">Copy & Use Anywhere</div>
+    </div>
+    <div class="card-body">
 
-<div class="container" id="tool">
+      <div class="task-grid" id="taskGrid">
+        <button class="task-btn active" data-task="LinkedIn Post" data-cat="career" onclick="selectTask(this)">
+          <span class="icon">💼</span>LinkedIn Post
+        </button>
+        <button class="task-btn" data-task="Study Notes" data-cat="learning" onclick="selectTask(this)">
+          <span class="icon">📚</span>Study Notes
+        </button>
+        <button class="task-btn" data-task="Project Ideas" data-cat="tech" onclick="selectTask(this)">
+          <span class="icon">🚀</span>Project Ideas
+        </button>
+        <button class="task-btn" data-task="Resume Builder" data-cat="career" onclick="selectTask(this)">
+          <span class="icon">📄</span>Resume Builder
+        </button>
+        <button class="task-btn" data-task="Code Explainer" data-cat="tech" onclick="selectTask(this)">
+          <span class="icon">⚡</span>Code Explainer
+        </button>
+        <button class="task-btn" data-task="Startup Idea" data-cat="business" onclick="selectTask(this)">
+          <span class="icon">💡</span>Startup Idea
+        </button>
+        <button class="task-btn" data-task="Interview Prep" data-cat="career" onclick="selectTask(this)">
+          <span class="icon">🎯</span>Interview Prep
+        </button>
+        <button class="task-btn" data-task="Marketing Copy" data-cat="business" onclick="selectTask(this)">
+          <span class="icon">📣</span>Marketing Copy
+        </button>
+        <button class="task-btn" data-task="Business Plan" data-cat="business" onclick="selectTask(this)">
+          <span class="icon">📊</span>Business Plan
+        </button>
+      </div>
 
-<div class="tool">
+      <div class="input-row">
+        <div class="input-wrap">
+          <input class="topic-input" id="topicInput" placeholder="Enter your topic..." onkeydown="if(event.key==='Enter') generate()"/>
+        </div>
+        <button class="gen-btn" id="genBtn" onclick="generate()">
+          <span id="btnText">Generate ↗</span>
+        </button>
+      </div>
 
-<h3>AI Prompt Generator</h3>
+      <div class="output-wrap">
+        <div class="output-label">Output</div>
+        <div class="output-box" id="outputBox">
+          <div class="loading-bar" id="loadingBar"></div>
+          <div class="placeholder-text" id="placeholder">
+            <div class="placeholder-icon">✦</div>
+            <div>Select a task type and enter your topic<br>to generate a premium AI prompt</div>
+          </div>
+          <div id="outputText" style="display:none;"></div>
+        </div>
 
-<select id="task">
-<option>LinkedIn Post</option>
-<option>Study Notes</option>
-<option>Project Ideas</option>
-<option>Resume Improvement</option>
-<option>Code Explanation</option>
-<option>Startup Idea</option>
-<option>Interview Prep</option>
-<option>Marketing Strategy</option>
-<option>Business Plan</option>
-</select>
+        <div class="meta-row" id="metaRow" style="display:none;">
+          <div class="token-count" id="charCount">0 characters</div>
+          <div class="quality-badge">✓ AI Generated</div>
+        </div>
 
-<input id="topic" placeholder="Enter topic">
+        <div class="action-bar" id="actionBar" style="display:none;">
+          <button class="action-btn" id="copyBtn" onclick="copyOutput()">⎘ Copy Prompt</button>
+          <button class="action-btn" onclick="regenerate()">↻ Regenerate</button>
+          <button class="action-btn" onclick="saveToHistory()">+ Save</button>
+        </div>
+      </div>
 
-<button class="btn" onclick="generate()">Generate</button>
+    </div>
+  </div>
 
-<div class="output" id="output">Your result will appear here...</div>
-
-<button class="smallBtn" onclick="copy()">Copy</button>
-
-</div>
+  <div class="history-section">
+    <div class="section-label">Recent Prompts</div>
+    <div class="history-list" id="historyList">
+      <div class="empty-history">No prompts saved yet. Generate and save your first one.</div>
+    </div>
+  </div>
 
 </div>
 
 <script>
+let currentTask = 'LinkedIn Post';
+let currentOutput = '';
+let history = [];
+let totalGenerated = 0;
+let totalChars = 0;
+let isLoading = false;
 
-function generate(){
-  let task = document.getElementById("task").value;
-  let topic = document.getElementById("topic").value;
+function selectTask(el) {
+  document.querySelectorAll('.task-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentTask = el.dataset.task;
+}
 
-  if(!topic.trim()){
-    document.getElementById("output").innerText = "Please enter a topic first.";
-    return;
-  }
+function filterPills(el, cat) {
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  const btns = document.querySelectorAll('.task-btn');
+  btns.forEach(b => {
+    if (cat === 'all' || b.dataset.cat === cat) {
+      b.style.display = '';
+    } else {
+      b.style.display = 'none';
+    }
+  });
+}
 
+function buildPrompt(task, topic) {
+  const t = topic;
   const map = {
-    "LinkedIn Post": `Write a viral LinkedIn post about "${topic}" with hook, story, insights and CTA.`,
-    "Study Notes": `Create exam-ready notes on "${topic}" with examples and summary.`,
-    "Project Ideas": `Give 15 real-world project ideas on "${topic}".`,
-    "Resume Improvement": `Improve resume for "${topic}" role with ATS optimization.`,
-    "Code Explanation": `Explain "${topic}" step by step in simple language.`,
-    "Startup Idea": `Give startup ideas based on "${topic}".`,
-    "Interview Prep": `Give interview questions for "${topic}".`,
-    "Marketing Strategy": `Create marketing strategy for "${topic}".`,
-    "Business Plan": `Write business plan for "${topic}".`
+    'LinkedIn Post': `You are a LinkedIn growth expert and storytelling coach. Write a high-engagement LinkedIn post about "${t}".
+
+Follow this exact structure:
+
+HOOK (Line 1 — stop the scroll):
+Write a bold, surprising, or contrarian opening line about ${t} that makes people stop scrolling. No "I'm excited to share" fluff.
+
+STORY (3–5 lines):
+Share a short personal experience or a relatable scenario connected to ${t}. Be specific, not vague.
+
+INSIGHT (3–4 bullet points):
+• Key lesson #1 from ${t}
+• Key lesson #2 — include a stat or number if possible
+• Key lesson #3 — something counterintuitive
+• Key lesson #4 — actionable takeaway
+
+CTA (Last line):
+End with a direct question to spark comments. Make it easy to answer in one sentence.
+
+Tone: Conversational, confident, no corporate jargon.
+Format: Short punchy lines. No walls of text. Use line breaks aggressively.`,
+
+    'Study Notes': `You are an expert educator. Create complete, exam-ready study notes on "${t}".
+
+Structure the notes exactly like this:
+
+📌 TOPIC OVERVIEW
+Write a 2-sentence plain-English summary of what ${t} is and why it matters.
+
+🔑 KEY CONCEPTS (cover all major subtopics)
+For each concept: Name → Definition → Real-world example → Common misconception
+
+📊 IMPORTANT FORMULAS / RULES / FRAMEWORKS
+List any equations, rules, or models relevant to ${t} with a one-line explanation of each.
+
+🧠 MEMORY TRICKS
+Create 2–3 mnemonics or analogies that make ${t} unforgettable.
+
+❓ LIKELY EXAM QUESTIONS
+List 8 questions that commonly appear in exams on ${t}, ranging from basic to advanced.
+
+📝 QUICK REVISION SUMMARY
+Summarize all of ${t} in exactly 5 bullet points. Each bullet = one core idea.`,
+
+    'Project Ideas': `You are a senior developer and portfolio mentor. Generate 10 real-world project ideas on "${t}".
+
+For each project, provide:
+
+PROJECT #[N]: [Creative Name]
+• Concept: One sentence — what does it do and who is it for?
+• Core Feature: The one thing that makes it impressive
+• Tech Stack: Frontend / Backend / Database / APIs used
+• Difficulty: Beginner / Intermediate / Advanced
+• Portfolio Impact: Why will this impress a recruiter or client?
+• Starter Idea: One specific first step to begin today
+
+Make the projects range from beginner to advanced. At least 3 should use real-world APIs or datasets. At least 2 should be unique/creative, not just tutorial clones.`,
+
+    'Resume Builder': `You are an ATS optimization expert and career coach. Rewrite and improve the resume section for the "${t}" role.
+
+Provide the following:
+
+🎯 JOB TITLE & HEADLINE
+Write a powerful resume headline for a ${t} professional (1 line, keyword-rich).
+
+💼 PROFESSIONAL SUMMARY (3–4 lines)
+Write an ATS-optimized summary. Include: years of experience placeholder, top 3 skills, one measurable achievement placeholder, and target role.
+
+⚡ EXPERIENCE BULLET POINTS (write 6 examples)
+Use the formula: [Strong Action Verb] + [What you did] + [Measurable Result]
+Make them specific to ${t}. Include metrics like %, $, time saved, users impacted.
+
+🔑 SKILLS SECTION
+List 15 hard skills and 5 soft skills most relevant to ${t} in 2025.
+
+📌 ATS KEYWORDS TO INCLUDE
+List 10 keywords from current ${t} job descriptions that must appear in the resume.`,
+
+    'Code Explainer': `You are a senior engineer who teaches complex topics simply. Explain "${t}" completely.
+
+Structure your explanation like this:
+
+🤔 WHAT IS IT? (ELI5 version)
+Explain ${t} as if talking to a complete beginner. Use a real-world analogy.
+
+🔍 HOW IT ACTUALLY WORKS (Technical breakdown)
+Step-by-step explanation of the mechanism behind ${t}. Use numbered steps.
+
+💻 CODE EXAMPLE
+Write a minimal, well-commented code example demonstrating ${t}.
+Add inline comments explaining every key line.
+
+⚠️ COMMON MISTAKES
+List 5 mistakes developers make with ${t} and how to avoid each one.
+
+🆚 COMPARISON
+Compare ${t} to the most similar alternative. When should you use each?
+
+🎯 WHEN TO USE IT
+Give 3 real scenarios where ${t} is the right choice and 2 where it is not.`,
+
+    'Startup Idea': `You are a Y Combinator mentor and serial entrepreneur. Generate 5 validated startup ideas in the "${t}" space.
+
+For each idea:
+
+🚀 STARTUP #[N]: [Name]
+• Problem: What specific pain point does it solve? Who suffers from this?
+• Solution: What does the product actually do? (1–2 sentences, no jargon)
+• Target Market: Primary user persona + market size estimate
+• Revenue Model: How does it make money? (subscription / marketplace / SaaS / etc.)
+• Unfair Advantage: Why would YOU be the right person to build this?
+• Competitor Gap: What do existing solutions miss that this fills?
+• MVP in 30 Days: What is the smallest version you could build and test?
+• Red Flag: One honest risk or challenge this idea faces
+
+Focus on ${t}. Make at least 2 ideas bootstrappable (no VC needed).`,
+
+    'Interview Prep': `You are a top technical recruiter and interview coach. Prepare a complete interview guide for "${t}".
+
+SECTION 1: TOP 20 INTERVIEW QUESTIONS
+List 20 questions actually asked in ${t} interviews, from easy to hard.
+Format: Q1. [Question] — [Type: Behavioral/Technical/Situational]
+
+SECTION 2: STAR ANSWER FRAMEWORK
+Explain the STAR method (Situation, Task, Action, Result) and write one full example answer for the hardest behavioral question from the list above, applied to ${t}.
+
+SECTION 3: TECHNICAL DEEP DIVES
+Pick the 5 hardest technical questions from your list. For each:
+• Ideal Answer Framework (what to cover)
+• Key terms to mention
+• What separates a good answer from a great one
+
+SECTION 4: QUESTIONS TO ASK THE INTERVIEWER
+Write 5 smart questions a candidate should ask at the end of a ${t} interview that show genuine depth and interest.
+
+SECTION 5: COMMON MISTAKES
+List 5 things candidates do wrong in ${t} interviews and how to avoid them.`,
+
+    'Marketing Copy': `You are a conversion copywriter trained on Ogilvy, Gary Halbert, and Alex Hormozi. Write high-converting marketing copy for "${t}".
+
+Deliver the following:
+
+📣 3 HEADLINE VARIANTS
+Write 3 different powerful headlines for ${t}:
+1. Curiosity-based headline
+2. Benefit-driven headline  
+3. Pain-point headline
+
+😣 PAIN POINTS (5 bullets)
+List the top 5 emotional and practical frustrations of the target customer for ${t}.
+
+✨ BENEFITS vs FEATURES TABLE
+| Feature | Benefit (what it means for the customer) |
+Write 6 rows specific to ${t}.
+
+💬 SOCIAL PROOF TEMPLATES
+Write 3 fake-but-realistic customer testimonials for ${t} that sound genuine and specific (not vague praise).
+
+🎯 CALL TO ACTION (3 variants)
+Write 3 different CTAs for ${t}:
+1. Urgency-based
+2. Value-based
+3. Curiosity-based
+
+📱 AD COPY (choose best headline + pain + CTA)
+Write a complete 100-word Facebook/Instagram ad for ${t}.`,
+
+    'Business Plan': `You are a McKinsey-trained business consultant. Write a lean business plan for "${t}".
+
+📋 EXECUTIVE SUMMARY (5 lines max)
+What is the business, who is it for, what problem does it solve, what is the revenue model, and what is the one-line vision?
+
+🎯 PROBLEM & SOLUTION
+Problem: Describe the exact pain point in ${t} with specifics.
+Solution: How does this business solve it uniquely?
+
+📊 MARKET ANALYSIS
+• Total Addressable Market (TAM) estimate for ${t}
+• Target customer persona (demographics, psychographics, behavior)
+• 3 main competitors and their weaknesses
+
+💰 REVENUE MODEL
+List 2–3 monetization strategies for a ${t} business with pricing examples.
+
+📈 GO-TO-MARKET STRATEGY
+How will you get your first 100 customers? Be specific — channels, tactics, timeline.
+
+⚙️ OPERATIONS
+Key resources, team roles needed, and tech/tools required to run this business.
+
+🗓️ 90-DAY ACTION PLAN
+Month 1: [3 specific actions]
+Month 2: [3 specific actions]  
+Month 3: [3 specific actions]
+
+🚨 RISKS & MITIGATION
+List 3 key risks for ${t} business and how to handle each.`
   };
 
-  document.getElementById("output").innerText = map[task];
+  return map[task] || `You are an expert in ${t}. Create a comprehensive, detailed, and actionable guide on this topic with clear sections, examples, and practical takeaways.`;
 }
 
-function copy(){
-  navigator.clipboard.writeText(document.getElementById("output").innerText);
-  alert("Copied!");
+function generate() {
+  const topic = document.getElementById('topicInput').value.trim();
+  if (!topic) {
+    document.getElementById('topicInput').focus();
+    document.getElementById('topicInput').style.borderColor = '#f87171';
+    setTimeout(() => document.getElementById('topicInput').style.borderColor = '', 1500);
+    return;
+  }
+  if (isLoading) return;
+
+  isLoading = true;
+  const genBtn = document.getElementById('genBtn');
+  genBtn.disabled = true;
+  document.getElementById('btnText').textContent = 'Building...';
+
+  const outputBox = document.getElementById('outputBox');
+  const outputText = document.getElementById('outputText');
+  const placeholder = document.getElementById('placeholder');
+  const loadingBar = document.getElementById('loadingBar');
+
+  placeholder.style.display = 'none';
+  outputText.style.display = 'block';
+  outputText.innerHTML = '';
+  outputBox.classList.add('active');
+  loadingBar.classList.add('visible');
+  document.getElementById('actionBar').style.display = 'none';
+  document.getElementById('metaRow').style.display = 'none';
+
+  const text = buildPrompt(currentTask, topic);
+  currentOutput = text;
+
+  // Small fake delay for effect, then typewriter
+  setTimeout(() => {
+    loadingBar.classList.remove('visible');
+
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    outputText.appendChild(cursor);
+
+    let i = 0;
+    function typeChar() {
+      if (i < text.length) {
+        cursor.before(document.createTextNode(text[i]));
+        i++;
+        // Faster typewriter — feels snappy, not slow
+        setTimeout(typeChar, i < 80 ? 10 : 2);
+      } else {
+        cursor.remove();
+        finishGeneration(text);
+      }
+    }
+    typeChar();
+  }, 500);
 }
 
-function toggleTheme(){
-  document.body.classList.toggle("light");
+function finishGeneration(text) {
+  isLoading = false;
+  document.getElementById('genBtn').disabled = false;
+  document.getElementById('btnText').textContent = 'Generate ↗';
+  document.getElementById('outputBox').classList.remove('active');
+
+  if (text) {
+    totalGenerated++;
+    totalChars += text.length;
+    updateStats();
+
+    document.getElementById('charCount').textContent = text.length.toLocaleString() + ' characters';
+    document.getElementById('metaRow').style.display = 'flex';
+    document.getElementById('actionBar').style.display = 'flex';
+  }
 }
 
+function updateStats() {
+  animateNum('stat-generated', totalGenerated);
+  animateNum('stat-chars', totalChars);
+}
+
+function animateNum(id, target) {
+  const el = document.getElementById(id);
+  const start = parseInt(el.textContent.replace(/,/g,'')) || 0;
+  const diff = target - start;
+  const steps = 20;
+  let step = 0;
+  const interval = setInterval(() => {
+    step++;
+    const val = Math.round(start + (diff * step / steps));
+    el.textContent = val.toLocaleString();
+    if (step >= steps) clearInterval(interval);
+  }, 30);
+}
+
+function copyOutput() {
+  if (!currentOutput) return;
+  navigator.clipboard.writeText(currentOutput).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('success');
+    setTimeout(() => {
+      btn.textContent = '⎘ Copy Prompt';
+      btn.classList.remove('success');
+    }, 2000);
+  });
+}
+
+function regenerate() {
+  generate();
+}
+
+function saveToHistory() {
+  if (!currentOutput) return;
+  const topic = document.getElementById('topicInput').value.trim();
+  const item = { task: currentTask, topic, output: currentOutput, time: new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) };
+  history.unshift(item);
+  if (history.length > 5) history.pop();
+  renderHistory();
+}
+
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  if (!history.length) {
+    list.innerHTML = '<div class="empty-history">No prompts saved yet. Generate and save your first one.</div>';
+    return;
+  }
+  list.innerHTML = history.map((item, i) => `
+    <div class="history-item" onclick="loadHistory(${i})">
+      <div>
+        <div class="history-topic">${item.topic}</div>
+        <div class="history-meta">${item.task}</div>
+      </div>
+      <div class="history-meta">${item.time}</div>
+    </div>
+  `).join('');
+}
+
+function loadHistory(i) {
+  const item = history[i];
+  document.getElementById('topicInput').value = item.topic;
+  currentOutput = item.output;
+  currentTask = item.task;
+  document.querySelectorAll('.task-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.task === item.task);
+  });
+  const outputText = document.getElementById('outputText');
+  document.getElementById('placeholder').style.display = 'none';
+  outputText.style.display = 'block';
+  outputText.textContent = item.output;
+  document.getElementById('charCount').textContent = item.output.length.toLocaleString() + ' characters';
+  document.getElementById('metaRow').style.display = 'flex';
+  document.getElementById('actionBar').style.display = 'flex';
+  document.getElementById('studio-card');
+  document.querySelector('.studio-card').scrollIntoView({behavior:'smooth'});
+}
 </script>
-
 </body>
 </html>
