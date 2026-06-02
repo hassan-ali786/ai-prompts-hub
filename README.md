@@ -5,6 +5,11 @@ You can easily copy prompts and use them for study, coding, resumes, and content
 
 ---
 
+## Live Demo:
+
+
+---
+
 ## What this project does
 
 - Provides ready-to-use AI prompts  
