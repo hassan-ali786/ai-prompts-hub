@@ -7,7 +7,7 @@ You can easily copy prompts and use them for study, coding, resumes, and content
 
 ## Live Demo:
 
-[Click here to view the Live Demo](https://news-classifier-gllhtp5tvw9ydgpwhprt4j.streamlit.app/)
+[Click here to view the Live Demo](https://hassan-ali786.github.io/ai-prompts-hub/)
 
 ---
 
