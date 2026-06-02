@@ -64,12 +64,6 @@ You can easily copy prompts and use them for study, coding, resumes, and content
 
 ---
 
-## Live Demo
-
-(https://hassan-ali786.github.io/ai-prompts-hub/)
-
----
-
 ## Contribution
 
 You can improve this project by adding more prompts or features.
