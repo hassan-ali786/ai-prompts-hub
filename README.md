@@ -10,6 +10,13 @@ You can easily copy prompts and use them for study, coding, resumes, and content
 [Click here to view the Live Demo](https://hassan-ali786.github.io/ai-prompts-hub/)
 
 ---
+## Live Demo:
+
+
+https://github.com/user-attachments/assets/8490e45d-9d74-47a2-889b-a87c7f0b34cf
+
+
+---
 
 ## What this project does
 
